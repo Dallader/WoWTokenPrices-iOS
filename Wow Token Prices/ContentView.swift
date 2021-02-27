@@ -72,6 +72,7 @@ class Region: ObservableObject, Codable {
 
 struct ContentView: View {
     @State var result: Response = Response()
+    @State private var uiUpdate = 0
     
     var regions = ["US", "EU", "China", "Korea", "Taiwan"]
     @State private var selectedRegion = "US"
@@ -89,11 +90,13 @@ struct ContentView: View {
                 if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data) {
                     DispatchQueue.main.async {
                         print("Decoding data...")
+                        self.uiUpdate = 1
                         result.us = decodedResponse.us
                         result.eu = decodedResponse.eu
                         result.china = decodedResponse.china
                         result.korea = decodedResponse.korea
                         result.taiwan = decodedResponse.taiwan
+                        self.uiUpdate = 0
                         print("Decoded data!")
                     }
                     return
@@ -139,6 +142,8 @@ struct ContentView: View {
                     Button("Refresh data", action: loadData)
                     Text("Last update: \(selectedRegionToRegion(data: result).timeOfLastChangeUTCTimezone)")
                         .font(.subheadline)
+                    Text("\(uiUpdate)")
+                        .foregroundColor(Color.gray.opacity(0))
                 }
             }
             .navigationBarTitle("WoWTokenPrices")
