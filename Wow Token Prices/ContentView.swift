@@ -7,23 +7,52 @@
 
 import SwiftUI
 
-struct Response: Codable {
-    let us, eu, china, korea, taiwan: Region
+class Response: ObservableObject, Codable {
+    var us: Region
+    var eu: Region
+    var china: Region
+    var korea: Region
+    var taiwan: Region
+    
+    init() {
+        self.us = Region()
+        self.eu = Region()
+        self.china = Region()
+        self.korea = Region()
+        self.taiwan = Region()
+    }
 }
 
-struct Region: Codable {
+class Region: ObservableObject, Codable {
     var region: String = ""
     var currentPrice: Int = 2137
     var lastChange: Int = 0
     var timeOfLastChangeUTCTimezone: String = ""
-    var timeOfLastChangeUnixEpoch: Double = 0
-    var the1_DayLow: Int = 0
-    var the1_DayHigh: Int = 0
+    var timeOfLastChangeUnixEpoch: Int = 0
+    var the1_DayLow: String = ""
+    var the1_DayHigh: String = ""
     var the7_DayLow: Int = 0
     var the7_DayHigh: Int = 0
     var the30_DayLow: Int = 0
     var the30_DayHigh: Int = 0
     var isFromAPI: String = ""
+    
+    init() {}
+    
+//    init(region: String, currentPrice: Int, lastChange: Int, timeOfLastChangeUTCTimezone: String, timeOfLastChangeUnixEpoch: Int, the1_DayLow: Int, the1_DayHigh: Int, the7_DayLow: Int, the7_DayHigh: Int, the30_DayLow: Int, the30_DayHigh: Int, isFromAPI: String) {
+//            self.region = region
+//            self.currentPrice = currentPrice
+//            self.lastChange = lastChange
+//            self.timeOfLastChangeUTCTimezone = timeOfLastChangeUTCTimezone
+//            self.timeOfLastChangeUnixEpoch = timeOfLastChangeUnixEpoch
+//            self.the1_DayLow = the1_DayLow
+//            self.the1_DayHigh = the1_DayHigh
+//            self.the7_DayLow = the7_DayLow
+//            self.the7_DayHigh = the7_DayHigh
+//            self.the30_DayLow = the30_DayLow
+//            self.the30_DayHigh = the30_DayHigh
+//            self.isFromAPI = isFromAPI
+//        }
 
     enum CodingKeys: String, CodingKey {
         case region
@@ -42,7 +71,7 @@ struct Region: Codable {
 }
 
 struct ContentView: View {
-    @State private var result: Response = Response(us: Region(), eu: Region(), china: Region(), korea: Region(), taiwan: Region())
+    @State var result: Response = Response()
     
     var regions = ["US", "EU", "China", "Korea", "Taiwan"]
     @State private var selectedRegion = "US"
@@ -60,7 +89,12 @@ struct ContentView: View {
                 if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data) {
                     DispatchQueue.main.async {
                         print("Decoding data...")
-                        self.result = decodedResponse
+                        result.us = decodedResponse.us
+                        result.eu = decodedResponse.eu
+                        result.china = decodedResponse.china
+                        result.korea = decodedResponse.korea
+                        result.taiwan = decodedResponse.taiwan
+                        print("Decoded data!")
                     }
                     return
                 }
@@ -68,9 +102,25 @@ struct ContentView: View {
             print("Fetch failed \(error?.localizedDescription ?? "Unknown error")")
         }.resume()
     }
+    func selectedRegionToRegion(data: Response) -> Region {
+        switch selectedRegion {
+        case "US":
+            return data.us
+        case "EU":
+            return data.eu
+        case "China":
+            return data.china
+        case "Korea":
+            return data.korea
+        case "Taiwan":
+            return data.taiwan
+        default:
+            return data.us
+        }
+    }
     var body: some View {
         NavigationView {
-            Form {
+            Section {
                 VStack {
                     Picker("Pick your region", selection: $selectedRegion) {
                         ForEach(regions, id: \.self) {
@@ -78,13 +128,21 @@ struct ContentView: View {
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    Text("Current token price is: \(result.eu.currentPrice)")
+                    Text("Current token price is: \(selectedRegionToRegion(data: result).currentPrice)")
                         .font(.title2)
-                    Text("Last update: \(result.eu.timeOfLastChangeUTCTimezone)")
+                    HStack {
+                        (selectedRegionToRegion(data: result).lastChange >= 0 ? Image(systemName: "arrow.up.right") : Image(systemName: "arrow.down.right"))
+                        Text("\(selectedRegionToRegion(data: result).lastChange)")
+                    }
+                    .foregroundColor((selectedRegionToRegion(data: result).lastChange >= 0 ? Color.green : Color.red))
+                        .font(.title2)
+                    Button("Refresh data", action: loadData)
+                    Text("Last update: \(selectedRegionToRegion(data: result).timeOfLastChangeUTCTimezone)")
                         .font(.subheadline)
                 }
             }
             .navigationBarTitle("WoWTokenPrices")
+            Spacer()
         }
         .onAppear(perform: loadData)
     }

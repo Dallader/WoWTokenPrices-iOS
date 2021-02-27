@@ -11,7 +11,7 @@ import SwiftUI
 struct Wow_Token_PricesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(result: Response())
         }
     }
 }
