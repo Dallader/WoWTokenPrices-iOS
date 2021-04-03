@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6511E47A2618AC7A005AC9B0 /* Model in Resources */ = {isa = PBXBuildFile; fileRef = 6511E4792618AC7A005AC9B0 /* Model */; };
 		6546F27625B760B4000CD38C /* Wow_Token_PricesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546F27525B760B4000CD38C /* Wow_Token_PricesApp.swift */; };
 		6546F27825B760B4000CD38C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546F27725B760B4000CD38C /* ContentView.swift */; };
 		6546F27A25B760B9000CD38C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6546F27925B760B9000CD38C /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6511E4792618AC7A005AC9B0 /* Model */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Model; sourceTree = "<group>"; };
 		6546F27225B760B4000CD38C /* Wow Token Prices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wow Token Prices.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6546F27525B760B4000CD38C /* Wow_Token_PricesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wow_Token_PricesApp.swift; sourceTree = "<group>"; };
 		6546F27725B760B4000CD38C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			children = (
 				6546F27525B760B4000CD38C /* Wow_Token_PricesApp.swift */,
 				6546F27725B760B4000CD38C /* ContentView.swift */,
+				6511E4792618AC7A005AC9B0 /* Model */,
 				6546F27925B760B9000CD38C /* Assets.xcassets */,
 				6546F27E25B760B9000CD38C /* Info.plist */,
 				6546F27B25B760B9000CD38C /* Preview Content */,
@@ -126,6 +129,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6511E47A2618AC7A005AC9B0 /* Model in Resources */,
 				6546F27D25B760B9000CD38C /* Preview Assets.xcassets in Resources */,
 				6546F27A25B760B9000CD38C /* Assets.xcassets in Resources */,
 			);
