@@ -12,55 +12,11 @@ struct ContentView: View {
     @State private var uiUpdate = 0
     
     var regions = ["US", "EU", "China", "Korea", "Taiwan"]
-    @State private var selectedRegion = "US"
+    @State private var selectedRegion = "US"        
     
-    func loadData() {
-        guard let url = URL(string: "https://wowtokenprices.com/current_prices.json") else {
-            print("Invalid URL")
-            return
-        }
-        print("Loading data...")
-        let request = URLRequest(url: url)
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
-                print("Got data!")
-                if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data) {
-                    DispatchQueue.main.async {
-                        print("Decoding data...")
-                        self.uiUpdate = 1
-                        result.us = decodedResponse.us
-                        result.eu = decodedResponse.eu
-                        result.china = decodedResponse.china
-                        result.korea = decodedResponse.korea
-                        result.taiwan = decodedResponse.taiwan
-                        self.uiUpdate = 0
-                        print("Decoded data!")
-                    }
-                    return
-                }
-            }
-            print("Fetch failed \(error?.localizedDescription ?? "Unknown error")")
-        }.resume()
-    }
-    func selectedRegionToRegion(data: Response) -> Region {
-        switch selectedRegion {
-        case "US":
-            return data.us
-        case "EU":
-            return data.eu
-        case "China":
-            return data.china
-        case "Korea":
-            return data.korea
-        case "Taiwan":
-            return data.taiwan
-        default:
-            return data.us
-        }
-    }
     var body: some View {
         NavigationView {
-            Section {
+            TabView {
                 VStack {
                     Picker("Pick your region", selection: $selectedRegion) {
                         ForEach(regions, id: \.self) {
@@ -82,12 +38,67 @@ struct ContentView: View {
                     Text("\(uiUpdate)")
                         .foregroundColor(Color.gray.opacity(0))
                 }
+                .tabItem() {
+                    Text("Current prices")
+                    Image(systemName: "dollarsign.square.fill")
+                }
+                HistoryView(day: 1)
+                    .tabItem {
+                        Text("History prices")
+                        Image(systemName: "chart.bar.xaxis")
+                    }
             }
             .navigationBarTitle("WoWTokenPrices")
-            Spacer()
         }
         .onAppear(perform: loadData)
     }
+    
+    func selectedRegionToRegion(data: Response) -> Region {
+        switch selectedRegion {
+        case "US":
+            return data.us
+        case "EU":
+            return data.eu
+        case "China":
+            return data.china
+        case "Korea":
+            return data.korea
+        case "Taiwan":
+            return data.taiwan
+        default:
+            return data.us
+        }
+    }
+    
+    func loadData() {
+        guard let url = URL(string: "https://wowtokenprices.com/current_prices.json") else {
+            print("Invalid URL")
+            return
+        }
+        print("Loading data...")
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData)
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                print("Got data!")
+                if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data) {
+                    DispatchQueue.main.async {
+                        print("Decoding data...")
+                        self.uiUpdate = 1
+                        result.us = decodedResponse.us
+                        result.eu = decodedResponse.eu
+                        result.china = decodedResponse.china
+                        result.korea = decodedResponse.korea
+                        result.taiwan = decodedResponse.taiwan
+                        self.uiUpdate = 0
+                        print("Decoded data!")
+                    }
+                    return
+                }
+            }
+            print("Fetch failed \(error?.localizedDescription ?? "Unknown error")")
+        }.resume()
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
