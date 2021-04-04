@@ -24,6 +24,7 @@ struct ContentView: View {
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
+                    .padding(30)
                     Text("Current token price is: \(selectedRegionToRegion(data: result).currentPrice)")
                         .font(.title2)
                     HStack {

@@ -10,6 +10,10 @@ import SwiftUICharts
 
 struct HistoryView: View {
     @State private var historyResponse: HistoryResponse = HistoryResponse()
+    
+    var regions = ["US", "EU", "China", "Korea", "Taiwan"]
+    @State private var selectedRegion = "US"
+    
     @State private var uiUpdate = 0
     @State private var pricesUS: [Double] = [Double]()
     @State private var pricesEU: [Double] = [Double]()
@@ -18,12 +22,36 @@ struct HistoryView: View {
     @State private var pricesTaiwan: [Double] = [Double]()
     
     var day: Int
-            
+
     var body: some View {
         VStack {
-            LineView(data: pricesUS, title: "\(day) Day history", legend: "")
+            Picker("Pick your region", selection: $selectedRegion) {
+                ForEach(regions, id: \.self) {
+                    Text($0)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(30)
+            LineView(data: selectedRegionToPrices(region: selectedRegion), title: "\(day) Day history", legend: "\(selectedRegion)")
                 .padding()
-                .onAppear(perform: loadData)
+                .onAppear(perform: { pricesUS.isEmpty ? loadData() : nil })
+        }
+    }
+    
+    func selectedRegionToPrices(region: String) -> [Double] {
+        switch region {
+        case "US":
+            return pricesUS
+        case "EU":
+            return pricesEU
+        case "China":
+            return pricesChina
+        case "Korea":
+            return pricesKorea
+        case "Taiwan":
+            return pricesTaiwan
+        default:
+            return pricesUS
         }
     }
     
