@@ -21,8 +21,10 @@ struct HistoryView: View {
     @State private var pricesKorea: [Double] = [Double]()
     @State private var pricesTaiwan: [Double] = [Double]()
     
-    var day: Int
-
+    @State private var day: Int = 1
+    var dayOptions = ["1 Day", "7 Days", "30 Days"]
+    @State private var selectedDay = "1 Day"
+    
     var body: some View {
         VStack {
             Picker("Pick your region", selection: $selectedRegion) {
@@ -32,12 +34,32 @@ struct HistoryView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(30)
+            Picker("Pick day range", selection: $selectedDay) {
+                ForEach(dayOptions, id: \.self) {
+                    Text($0)
+                }
+            }
+            .onChange(of: selectedDay) { newDay in
+                print("day changed to \(newDay)")
+                switch self.selectedDay {
+                case "1 Day":
+                    self.day = 1
+                case "7 Days":
+                    self.day = 7
+                case "30 Days":
+                    self.day = 30
+                default:
+                    self.day = 1
+                }
+                loadData()
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
             LineView(data: selectedRegionToPrices(region: selectedRegion), title: "\(day) Day history", legend: "\(selectedRegion)")
                 .padding()
                 .onAppear(perform: { pricesUS.isEmpty ? loadData() : nil })
         }
     }
-    
     func selectedRegionToPrices(region: String) -> [Double] {
         switch region {
         case "US":
@@ -69,6 +91,11 @@ struct HistoryView: View {
                     DispatchQueue.main.async {
                         print("Decoding data...")
                         uiUpdate = 1
+                        pricesUS.removeAll()
+                        pricesEU.removeAll()
+                        pricesChina.removeAll()
+                        pricesKorea.removeAll()
+                        pricesTaiwan.removeAll()
                         historyResponse.us = decodedResponse.us
                         for index in historyResponse.us {
                             let indexPrices = Double(index.price)
@@ -96,6 +123,19 @@ struct HistoryView: View {
                         }
                         print("Decoded data!")
                         uiUpdate = 0
+                        
+                        filterArrays(rate: { () -> Int in 
+                            switch day {
+                            case 1:
+                                return 1
+                            case 7:
+                                return 7
+                            case 30:
+                                return 30
+                            default:
+                                return 1
+                            }
+                        }(), us: pricesUS, eu: pricesEU, china: pricesChina, korea: pricesKorea, taiwan: pricesTaiwan)
                     }
                     return
                 }
@@ -103,10 +143,31 @@ struct HistoryView: View {
             print("Fetch failed \(error?.localizedDescription ?? "Unknown error")")
         }.resume()
     }
+    
+    func filterArrays(rate: Int, us: [Double], eu: [Double], china: [Double], korea: [Double], taiwan: [Double]) {
+        let arr: [[Double]] = [us, eu, china, korea, taiwan]
+        var filteredPrices = [[Double]]()
+        
+        for table in arr {
+            var filteredArray = [Double]()
+            for (index, item) in table.enumerated() {
+                if index.isMultiple(of: rate) {
+                    filteredArray.append(item)
+                }
+            }
+            filteredPrices.append(filteredArray)
+        }
+        self.pricesUS = filteredPrices[0]
+        self.pricesEU = filteredPrices[1]
+        self.pricesChina = filteredPrices[2]
+        self.pricesKorea = filteredPrices[3]
+        self.pricesTaiwan = filteredPrices[4]
+    }
+    
 }
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView(day: 1)
+        HistoryView()
     }
 }

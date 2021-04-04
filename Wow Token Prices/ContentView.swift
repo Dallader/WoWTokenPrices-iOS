@@ -43,7 +43,7 @@ struct ContentView: View {
                     Text("Current prices")
                     Image(systemName: "dollarsign.square.fill")
                 }
-                HistoryView(day: 1)
+                HistoryView()
                     .tabItem {
                         Text("History prices")
                         Image(systemName: "chart.bar.xaxis")
