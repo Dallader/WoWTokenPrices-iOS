@@ -83,7 +83,7 @@ struct HistoryView: View {
             return
         }
         print("Loading data...")
-        let request = URLRequest(url: url)
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 print("Got data!")

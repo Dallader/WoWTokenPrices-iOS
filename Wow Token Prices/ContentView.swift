@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var uiUpdate = 0
     
     var regions = ["US", "EU", "China", "Korea", "Taiwan"]
-    @State private var selectedRegion = "US"        
+    @State private var selectedRegion = "US"
     
     var body: some View {
         NavigationView {
@@ -25,17 +25,22 @@ struct ContentView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(30)
+                    
                     Text("Current token price is: \(selectedRegionToRegion(data: result).currentPrice)")
                         .font(.title2)
+                    
                     HStack {
                         (selectedRegionToRegion(data: result).lastChange >= 0 ? Image(systemName: "arrow.up.right") : Image(systemName: "arrow.down.right"))
                         Text("\(selectedRegionToRegion(data: result).lastChange)")
                     }
                     .foregroundColor((selectedRegionToRegion(data: result).lastChange >= 0 ? Color.green : Color.red))
                         .font(.title2)
+                    
                     Button("Refresh data", action: loadData)
+                    
                     Text("Last update: \(selectedRegionToRegion(data: result).timeOfLastChangeUTCTimezone)")
                         .font(.subheadline)
+                    
                     Text("\(uiUpdate)")
                         .foregroundColor(Color.gray.opacity(0))
                 }
@@ -43,11 +48,19 @@ struct ContentView: View {
                     Text("Current prices")
                     Image(systemName: "dollarsign.square.fill")
                 }
+                
                 HistoryView()
                     .tabItem {
                         Text("History prices")
                         Image(systemName: "chart.bar.xaxis")
                     }
+                
+                AboutView()
+                    .tabItem {
+                        Text("About")
+                        Image(systemName: "questionmark.circle.fill")
+                    }
+                
             }
             .navigationBarTitle("WoWTokenPrices")
         }
@@ -77,7 +90,7 @@ struct ContentView: View {
             return
         }
         print("Loading data...")
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData)
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 print("Got data!")
