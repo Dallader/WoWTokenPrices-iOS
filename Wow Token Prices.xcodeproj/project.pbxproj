@@ -3,25 +3,32 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6511E47A2618AC7A005AC9B0 /* Model in Resources */ = {isa = PBXBuildFile; fileRef = 6511E4792618AC7A005AC9B0 /* Model */; };
+		650FC5E5261CF02D00120FAF /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650FC5E4261CF02D00120FAF /* AboutView.swift */; };
 		6546F27625B760B4000CD38C /* Wow_Token_PricesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546F27525B760B4000CD38C /* Wow_Token_PricesApp.swift */; };
 		6546F27825B760B4000CD38C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6546F27725B760B4000CD38C /* ContentView.swift */; };
 		6546F27A25B760B9000CD38C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6546F27925B760B9000CD38C /* Assets.xcassets */; };
 		6546F27D25B760B9000CD38C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6546F27C25B760B9000CD38C /* Preview Assets.xcassets */; };
+		65A2D24C2618B3C100D72E71 /* URLRequestModelCurrentPrices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A2D24B2618B3C100D72E71 /* URLRequestModelCurrentPrices.swift */; };
+		65E859C02618D84000DD1F40 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 65E859BF2618D84000DD1F40 /* SwiftUICharts */; };
+		65E859C42618DBC500DD1F40 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E859C32618DBC500DD1F40 /* HistoryView.swift */; };
+		65E859C82618E00400DD1F40 /* URLRequestModelHistoryPrices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E859C72618E00400DD1F40 /* URLRequestModelHistoryPrices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6511E4792618AC7A005AC9B0 /* Model */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Model; sourceTree = "<group>"; };
+		650FC5E4261CF02D00120FAF /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		6546F27225B760B4000CD38C /* Wow Token Prices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wow Token Prices.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6546F27525B760B4000CD38C /* Wow_Token_PricesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wow_Token_PricesApp.swift; sourceTree = "<group>"; };
 		6546F27725B760B4000CD38C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6546F27925B760B9000CD38C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6546F27C25B760B9000CD38C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6546F27E25B760B9000CD38C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65A2D24B2618B3C100D72E71 /* URLRequestModelCurrentPrices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestModelCurrentPrices.swift; sourceTree = "<group>"; };
+		65E859C32618DBC500DD1F40 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		65E859C72618E00400DD1F40 /* URLRequestModelHistoryPrices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestModelHistoryPrices.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65E859C02618D84000DD1F40 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,9 +62,10 @@
 		6546F27425B760B4000CD38C /* Wow Token Prices */ = {
 			isa = PBXGroup;
 			children = (
+				65E859C22618DB4600DD1F40 /* Views */,
+				65A2D24F2618B46800D72E71 /* Models */,
 				6546F27525B760B4000CD38C /* Wow_Token_PricesApp.swift */,
 				6546F27725B760B4000CD38C /* ContentView.swift */,
-				6511E4792618AC7A005AC9B0 /* Model */,
 				6546F27925B760B9000CD38C /* Assets.xcassets */,
 				6546F27E25B760B9000CD38C /* Info.plist */,
 				6546F27B25B760B9000CD38C /* Preview Content */,
@@ -70,6 +79,24 @@
 				6546F27C25B760B9000CD38C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		65A2D24F2618B46800D72E71 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				65A2D24B2618B3C100D72E71 /* URLRequestModelCurrentPrices.swift */,
+				65E859C72618E00400DD1F40 /* URLRequestModelHistoryPrices.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		65E859C22618DB4600DD1F40 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				65E859C32618DBC500DD1F40 /* HistoryView.swift */,
+				650FC5E4261CF02D00120FAF /* AboutView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -88,6 +115,9 @@
 			dependencies = (
 			);
 			name = "Wow Token Prices";
+			packageProductDependencies = (
+				65E859BF2618D84000DD1F40 /* SwiftUICharts */,
+			);
 			productName = "Wow Token Prices";
 			productReference = 6546F27225B760B4000CD38C /* Wow Token Prices.app */;
 			productType = "com.apple.product-type.application";
@@ -115,6 +145,9 @@
 				Base,
 			);
 			mainGroup = 6546F26925B760B4000CD38C;
+			packageReferences = (
+				65E859BE2618D84000DD1F40 /* XCRemoteSwiftPackageReference "ChartView" */,
+			);
 			productRefGroup = 6546F27325B760B4000CD38C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -129,7 +162,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6511E47A2618AC7A005AC9B0 /* Model in Resources */,
 				6546F27D25B760B9000CD38C /* Preview Assets.xcassets in Resources */,
 				6546F27A25B760B9000CD38C /* Assets.xcassets in Resources */,
 			);
@@ -142,7 +174,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65A2D24C2618B3C100D72E71 /* URLRequestModelCurrentPrices.swift in Sources */,
+				65E859C82618E00400DD1F40 /* URLRequestModelHistoryPrices.swift in Sources */,
+				65E859C42618DBC500DD1F40 /* HistoryView.swift in Sources */,
 				6546F27825B760B4000CD38C /* ContentView.swift in Sources */,
+				650FC5E5261CF02D00120FAF /* AboutView.swift in Sources */,
 				6546F27625B760B4000CD38C /* Wow_Token_PricesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,6 +368,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		65E859BE2618D84000DD1F40 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		65E859BF2618D84000DD1F40 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65E859BE2618D84000DD1F40 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6546F26A25B760B4000CD38C /* Project object */;
 }
