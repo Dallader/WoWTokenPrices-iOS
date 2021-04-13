@@ -4,4 +4,5 @@ iOS App for tracking WoW Token Prices on your iPhone.
 - [WoWTokenPrices.com](https://wowtokenprices.com) Data feed
 - [SwiftUICharts](https://github.com/Res3387/SwiftUICharts)
 ## Acknowledgments
+- This app is an unofficial project
 - This project is my first so I'd be thankful for any advice regarding the code or repository
